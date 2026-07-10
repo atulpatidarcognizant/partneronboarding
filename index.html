@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayer Partner Portal - Onboarding Experience</title>
+    <!-- Google Fonts: Inter and Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Global Header -->
+    <header class="global-header">
+        <div class="header-left">
+            <div class="logo-container">
+                <!-- Bayer Logo Image -->
+                <img class="bayer-logo" src="Bayer-Logo.wine.png" alt="Bayer Logo">
+                <div class="logo-text">
+                    <span class="brand-title">Bayer</span>
+                    <span class="brand-subtitle">Partner Portal</span>
+                </div>
+            </div>
+            <div class="header-badge">Enterprise Onboarding</div>
+        </div>
+
+        <div class="header-center">
+            <div class="search-bar-container">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" placeholder="Search partner documents, compliance tasks, or setup guides..." id="global-search">
+                <span class="search-shortcut">⌘K</span>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <!-- View Mode Selector (Toggle between Partner and Bayer Employee) -->
+            <div class="role-selector">
+                <button class="role-btn active" id="btn-role-partner" onclick="switchRole('partner')">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Partner Portal
+                </button>
+                <button class="role-btn" id="btn-role-internal" onclick="switchRole('internal')">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                    Bayer Internal
+                </button>
+            </div>
+
+            <!-- Notifications -->
+            <div class="icon-notification-container" onclick="toggleNotifications()">
+                <div class="icon-btn">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <span class="notification-badge" id="notification-count">2</span>
+                </div>
+                <!-- Notifications Dropdown -->
+                <div class="dropdown-panel" id="notifications-dropdown">
+                    <div class="dropdown-header">
+                        <h4>Activity Notifications</h4>
+                        <button onclick="clearNotifications(event)">Mark all as read</button>
+                    </div>
+                    <div class="dropdown-list" id="notifications-list">
+                        <div class="dropdown-item unread">
+                            <div class="item-icon success">✓</div>
+                            <div class="item-content">
+                                <p class="item-text"><strong>AI Verification Complete</strong>: Bank details matches company entity record.</p>
+                                <span class="item-time">2 mins ago</span>
+                            </div>
+                        </div>
+                        <div class="dropdown-item unread">
+                            <div class="item-icon warning">!</div>
+                            <div class="item-content">
+                                <p class="item-text"><strong>Tax Certificate</strong>: Nearing validation check. Verification pending.</p>
+                                <span class="item-time">1 hour ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Profile -->
+            <div class="user-profile-menu">
+                <div class="profile-avatar">AP</div>
+                <div class="profile-info">
+                    <span class="profile-name">Atul Patidar</span>
+                    <span class="profile-role">AgriCorp Inc.</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar-nav">
+            <div class="sidebar-section-label">PARTNER STAGES</div>
+            <ul class="nav-menu">
+                <li class="nav-item active" data-target="view-dashboard" onclick="navigateTo('view-dashboard')">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    Dashboard Overview
+                </li>
+                <li class="nav-item" data-target="view-form" onclick="navigateTo('view-form')">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Company Information
+                </li>
+                <li class="nav-item" data-target="view-documents" onclick="navigateTo('view-documents')">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    Required Documents
+                    <span class="nav-badge pending" id="doc-badge-count">6</span>
+                </li>
+                <li class="nav-item" data-target="view-ai-validation" onclick="navigateTo('view-ai-validation')">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 22"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    AI Validation Center
+                </li>
+                <li class="nav-item" data-target="view-timeline" onclick="navigateTo('view-timeline')">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    Onboarding Progress
+                </li>
+            </ul>
+
+            <div class="sidebar-section-label" id="internal-section-label" style="display: none;">INTERNAL VIEW</div>
+            <ul class="nav-menu" id="internal-nav-menu" style="display: none;">
+                <li class="nav-item" data-target="view-internal" onclick="navigateTo('view-internal')">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Partner Approval Queue
+                    <span class="nav-badge alert">3</span>
+                </li>
+            </ul>
+
+            <!-- Sidebar Info Footer -->
+            <div class="sidebar-footer">
+                <div class="footer-card">
+                    <div class="footer-card-header">
+                        <span class="status-pulse green"></span>
+                        <span class="footer-card-title">Portal Sync Active</span>
+                    </div>
+                    <p class="footer-card-text">Changes are autosaved securely to Bayer ERP.</p>
+                </div>
+                <div class="footer-version">v2.4.1-Prod • ERP API v10</div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Area -->
+        <main class="main-content">
+            <!-- Stepper Container (Top of main workspace) -->
+            <div class="stepper-outer-container" id="stepper-wrapper">
+                <div class="stepper-scroll-container">
+                    <div class="stepper-header">
+                        <h3>ONBOARDING JOURNEY PROGRESS</h3>
+                        <span class="stepper-percentage" id="stepper-percent-label">Onboarding Status: 8% Complete</span>
+                    </div>
+                    <div class="stepper" id="onboarding-stepper">
+                        <!-- Steps will be generated or populated here -->
+                        <div class="step active" onclick="jumpToStep(0)">
+                            <div class="step-num">1</div>
+                            <span class="step-title">Welcome</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" onclick="jumpToStep(1)">
+                            <div class="step-num">2</div>
+                            <span class="step-title">Company Info</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" onclick="jumpToStep(2)">
+                            <div class="step-num">3</div>
+                            <span class="step-title">Business Verification</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" onclick="jumpToStep(3)">
+                            <div class="step-num">4</div>
+                            <span class="step-title">Required Documents</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" onclick="jumpToStep(4)">
+                            <div class="step-num">5</div>
+                            <span class="step-title">Banking & Financial</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" onclick="jumpToStep(5)">
+                            <div class="step-num">6</div>
+                            <span class="step-title">Compliance Validation</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" onclick="jumpToStep(6)">
+                            <div class="step-num">7</div>
+                            <span class="step-title">ERP & CRM Setup</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" onclick="jumpToStep(7)">
+                            <div class="step-num">8</div>
+                            <span class="step-title">User Access</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" onclick="jumpToStep(8)">
+                            <div class="step-num">9</div>
+                            <span class="step-title">AI Readiness</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" onclick="jumpToStep(9)">
+                            <div class="step-num">10</div>
+                            <span class="step-title">Final Review</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" onclick="jumpToStep(10)">
+                            <div class="step-num">11</div>
+                            <span class="step-title">Activation</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" onclick="jumpToStep(11)">
+                            <div class="step-num">12</div>
+                            <span class="step-title">First Order</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toast Notification Container -->
+            <div id="toast-container" class="toast-container"></div>
+
+            <!-- View Views Area -->
+            <div class="views-viewport">
+                
+                <!-- 1. LANDING DASHBOARD VIEW -->
+                <section id="view-dashboard" class="content-view active">
+                    <div class="dashboard-hero">
+                        <div class="hero-left">
+                            <span class="hero-tag">Bayer Onboarding Program</span>
+                            <h1>Welcome to the Bayer Partner Ecosystem</h1>
+                            <p class="hero-desc">We are excited to partner with you. Complete the digital onboarding journey to activate your partner profile, integrate your systems with Bayer Crop Science ERP, and start placing orders.</p>
+                            <div class="hero-actions">
+                                <button class="primary-btn ripple" onclick="navigateTo('view-form')">
+                                    Continue Onboarding
+                                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </button>
+                                <button class="secondary-btn" onclick="triggerCopilotGuide()">
+                                    Quick Guide Tour
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hero-right">
+                            <!-- Circular Progress Card -->
+                            <div class="progress-circle-card">
+                                <svg class="circle-progress-svg" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="40" class="circle-bg" />
+                                    <circle cx="50" cy="50" r="40" class="circle-fg" id="dashboard-circle-progress" stroke-dasharray="251.2" stroke-dashoffset="231" />
+                                </svg>
+                                <div class="progress-text-overlay">
+                                    <span class="progress-val" id="dashboard-progress-percentage">8%</span>
+                                    <span class="progress-label">Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Grid -->
+                    <div class="dashboard-grid">
+                        <!-- Onboarding Metrics -->
+                        <div class="dashboard-card status-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Onboarding Metrics</h3>
+                                <span class="badge blue">Live Status</span>
+                            </div>
+                            <div class="metrics-container">
+                                <div class="metric-item">
+                                    <span class="metric-label">Current Phase</span>
+                                    <span class="metric-value text-blue" id="dash-metric-phase">Company Info</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">Remaining Tasks</span>
+                                    <span class="metric-value" id="dash-metric-tasks">9 Tasks</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">Est. Completion Time</span>
+                                    <span class="metric-value" id="dash-metric-time">4.2 Hours</span>
+                                </div>
+                            </div>
+                            <div class="next-step-hint">
+                                <div class="hint-icon">💡</div>
+                                <div class="hint-content">
+                                    <strong>AI Recommended Action:</strong> Complete the company information form to trigger automatic tax entity checks.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Readiness Card -->
+                        <div class="dashboard-card ai-readiness-card">
+                            <div class="card-header">
+                                <h3 class="card-title flex-align">
+                                    <span class="ai-spark-icon">✨</span>
+                                    AI Readiness Check
+                                </h3>
+                                <span class="badge green" id="dash-compliance-badge">94% Score</span>
+                            </div>
+                            <p class="card-desc">Bayer Onboarding AI automatically checks compliance, verification and data integrity in real-time as you complete forms.</p>
+                            
+                            <div class="ai-checks-list">
+                                <div class="ai-check-row passed">
+                                    <span class="check-icon">✓</span>
+                                    <div class="check-info">
+                                        <div class="check-title">Sanctions & Compliance Check</div>
+                                        <div class="check-desc">Passed global database validation.</div>
+                                    </div>
+                                </div>
+                                <div class="ai-check-row passed">
+                                    <span class="check-icon">✓</span>
+                                    <div class="check-info">
+                                        <div class="check-title">Duplicate Profile Search</div>
+                                        <div class="check-desc">No existing entities match.</div>
+                                    </div>
+                                </div>
+                                <div class="ai-check-row pending">
+                                    <span class="check-icon">⋯</span>
+                                    <div class="check-info">
+                                        <div class="check-title">Bank Details Integrity Check</div>
+                                        <div class="check-desc">Awaiting Bank Details upload in Stage 5.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="text-link-btn" onclick="navigateTo('view-ai-validation')">Open AI Validation Center →</button>
+                        </div>
+
+                        <!-- Recent Activity Timeline -->
+                        <div class="dashboard-card timeline-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Recent Activity</h3>
+                                <button class="icon-refresh-btn" onclick="refreshActivity()">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                </button>
+                            </div>
+                            
+                            <div class="activity-timeline" id="activity-timeline-list">
+                                <div class="activity-item">
+                                    <div class="activity-dot green"></div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">Portal Account Created</div>
+                                        <div class="activity-desc">Account registered under AgriCorp Inc.</div>
+                                        <span class="activity-time">Today, 09:12 AM</span>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-dot blue"></div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">Welcome Stage Finished</div>
+                                        <div class="activity-desc">Onboarding wizard initiated.</div>
+                                        <span class="activity-time">Today, 09:15 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. PARTNER INFORMATION SCREEN -->
+                <section id="view-form" class="content-view">
+                    <div class="section-title-bar">
+                        <div>
+                            <span class="section-subtitle">Stage 2 of 12</span>
+                            <h2>Company Information</h2>
+                        </div>
+                        <button class="ai-button-glow" onclick="triggerFormAutoFill()">
+                            <span class="ai-spark-icon">✨</span>
+                            AI Auto-Fill Form
+                        </button>
+                    </div>
+
+                    <div class="form-layout-container">
+                        <div class="main-form-card">
+                            <form id="partner-info-form" onsubmit="submitForm(event)">
+                                <div class="form-grid">
+                                    <div class="form-group col-6">
+                                        <label for="company-name">Company Legal Name <span class="required">*</span></label>
+                                        <input type="text" id="company-name" placeholder="Enter legally registered company name" required oninput="validateField(this)">
+                                        <span class="error-msg">This field is required.</span>
+                                    </div>
+
+                                    <div class="form-group col-3">
+                                        <label for="partner-country">Country <span class="required">*</span></label>
+                                        <select id="partner-country" required onchange="validateField(this); updateRegions(this.value)">
+                                            <option value="" disabled selected>Select country</option>
+                                            <option value="US">United States</option>
+                                            <option value="DE">Germany</option>
+                                            <option value="BR">Brazil</option>
+                                            <option value="IN">India</option>
+                                            <option value="CA">Canada</option>
+                                        </select>
+                                        <span class="error-msg">Please select a country.</span>
+                                    </div>
+
+                                    <div class="form-group col-3">
+                                        <label for="partner-region">Region <span class="required">*</span></label>
+                                        <select id="partner-region" required onchange="validateField(this)">
+                                            <option value="" disabled selected>Select country first</option>
+                                        </select>
+                                        <span class="error-msg">Please select a region.</span>
+                                    </div>
+
+                                    <div class="form-group col-4">
+                                        <label for="partner-type">Partner Type <span class="required">*</span></label>
+                                        <div class="radio-pill-group">
+                                            <label class="radio-pill">
+                                                <input type="radio" name="partner-type" value="Distributor" checked>
+                                                <span>Distributor</span>
+                                            </label>
+                                            <label class="radio-pill">
+                                                <input type="radio" name="partner-type" value="Retailer">
+                                                <span>Retailer</span>
+                                            </label>
+                                            <label class="radio-pill">
+                                                <input type="radio" name="partner-type" value="Dealer">
+                                                <span>Dealer</span>
+                                            </label>
+                                            <label class="radio-pill">
+                                                <input type="radio" name="partner-type" value="Consultant">
+                                                <span>Consultant</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-4">
+                                        <label for="crop-focus">Crop Focus <span class="required">*</span></label>
+                                        <select id="crop-focus" required onchange="validateField(this)">
+                                            <option value="" disabled selected>Select Crop Focus</option>
+                                            <option value="Corn">Corn & Maize</option>
+                                            <option value="Soybeans">Soybeans & Oilseeds</option>
+                                            <option value="Wheat">Wheat & Small Grains</option>
+                                            <option value="Cotton">Cotton & Fibers</option>
+                                            <option value="Horticulture">Horticulture & Vegetables</option>
+                                            <option value="Multi-Crop">Multi-Crop Portfolio</option>
+                                        </select>
+                                        <span class="error-msg">Please select crop focus.</span>
+                                    </div>
+
+                                    <div class="form-group col-4">
+                                        <label for="tax-info">Tax Identification Number (TIN) <span class="required">*</span></label>
+                                        <input type="text" id="tax-info" placeholder="XX-XXXXXXX or equivalent" required oninput="validateField(this)">
+                                        <span class="error-msg">Enter a valid Tax ID.</span>
+                                    </div>
+
+                                    <div class="form-group col-6">
+                                        <label for="primary-contact">Primary Contact Name <span class="required">*</span></label>
+                                        <input type="text" id="primary-contact" placeholder="First and last name" required oninput="validateField(this)">
+                                        <span class="error-msg">Primary contact is required.</span>
+                                    </div>
+
+                                    <div class="form-group col-6">
+                                        <label for="primary-email">Primary Contact Email <span class="required">*</span></label>
+                                        <input type="email" id="primary-email" placeholder="workemail@company.com" required oninput="validateField(this)">
+                                        <span class="error-msg">Please enter a valid email address.</span>
+                                    </div>
+
+                                    <div class="form-group col-12">
+                                        <label for="business-registration">Business Registration Number <span class="required">*</span></label>
+                                        <input type="text" id="business-registration" placeholder="Registered commercial register number" required oninput="validateField(this)">
+                                        <span class="error-msg">Business registration number is required.</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <span class="auto-save-status">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                        Autosaved draft
+                                    </span>
+                                    <div class="btn-group">
+                                        <button type="button" class="secondary-btn" onclick="navigateTo('view-dashboard')">Cancel</button>
+                                        <button type="submit" class="primary-btn">
+                                            Save & Continue
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Sidebar Advice Panel inside Form view -->
+                        <div class="form-help-panel">
+                            <div class="ai-advice-header">
+                                <span class="ai-spark-icon">✨</span>
+                                <h4>AI Assistance Insights</h4>
+                            </div>
+                            <div class="ai-advice-body">
+                                <p>Provide details exactly matching your company register extract. The Bayer AI will automatically lookup database records to pre-approve the next stage <strong>(Business Verification)</strong> instantly.</p>
+                                <div class="ai-field-fill-alert" id="ai-help-status">
+                                    <span class="status-dot orange"></span>
+                                    <span>Form contains unfilled required fields.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. DOCUMENT UPLOAD VIEW -->
+                <section id="view-documents" class="content-view">
+                    <div class="section-title-bar">
+                        <div>
+                            <span class="section-subtitle">Stage 4 of 12</span>
+                            <h2>Required Documents & Credentials</h2>
+                        </div>
+                        <div class="batch-upload-option">
+                            <span class="ai-spark-icon">✨</span>
+                            AI will auto-classify files on drop
+                        </div>
+                    </div>
+
+                    <!-- Upload Area Grid -->
+                    <div class="upload-grid" id="document-upload-grid">
+                        <!-- Document 1: Business Registration -->
+                        <div class="upload-card" id="doc-card-registration">
+                            <div class="upload-card-header">
+                                <div class="doc-icon-container">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="#003A70" stroke-width="2" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg>
+                                </div>
+                                <div class="doc-title-info">
+                                    <h4>Business Registration</h4>
+                                    <p>Official trade or commercial registration extract.</p>
+                                </div>
+                                <span class="status-pill pending" id="doc-status-registration">Pending</span>
+                            </div>
+                            <div class="drop-zone" onclick="simulateFileUpload('registration')" id="dropzone-registration">
+                                <svg class="drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                <p class="drop-text">Click to choose or drag & drop file here</p>
+                                <p class="drop-hint">PDF, PNG, JPG up to 10MB</p>
+                            </div>
+                            <div class="ai-verification-strip" id="ai-strip-registration" style="display:none;">
+                                <div class="spinner"></div>
+                                <span>AI is verifying document structure...</span>
+                            </div>
+                        </div>
+
+                        <!-- Document 2: Tax Certificate -->
+                        <div class="upload-card" id="doc-card-tax">
+                            <div class="upload-card-header">
+                                <div class="doc-icon-container">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="#003A70" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                </div>
+                                <div class="doc-title-info">
+                                    <h4>Tax Certificate / W-9 / VAT</h4>
+                                    <p>Official tax status validation form.</p>
+                                </div>
+                                <span class="status-pill pending" id="doc-status-tax">Pending</span>
+                            </div>
+                            <div class="drop-zone" onclick="simulateFileUpload('tax')" id="dropzone-tax">
+                                <svg class="drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                <p class="drop-text">Click to choose or drag & drop file here</p>
+                                <p class="drop-hint">PDF, PNG, JPG up to 10MB</p>
+                            </div>
+                            <div class="ai-verification-strip" id="ai-strip-tax" style="display:none;">
+                                <div class="spinner"></div>
+                                <span>AI is verifying document structure...</span>
+                            </div>
+                        </div>
+
+                        <!-- Document 3: Bank Details -->
+                        <div class="upload-card" id="doc-card-bank">
+                            <div class="upload-card-header">
+                                <div class="doc-icon-container">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="#003A70" stroke-width="2" fill="none"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                </div>
+                                <div class="doc-title-info">
+                                    <h4>Bank Confirmation Letter</h4>
+                                    <p>Official bank letter confirming account number & IBAN.</p>
+                                </div>
+                                <span class="status-pill pending" id="doc-status-bank">Pending</span>
+                            </div>
+                            <div class="drop-zone" onclick="simulateFileUpload('bank')" id="dropzone-bank">
+                                <svg class="drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                <p class="drop-text">Click to choose or drag & drop file here</p>
+                                <p class="drop-hint">PDF, PNG up to 10MB</p>
+                            </div>
+                            <div class="ai-verification-strip" id="ai-strip-bank" style="display:none;">
+                                <div class="spinner"></div>
+                                <span>AI is verifying document structure...</span>
+                            </div>
+                        </div>
+
+                        <!-- Document 4: Compliance Documents -->
+                        <div class="upload-card" id="doc-card-compliance">
+                            <div class="upload-card-header">
+                                <div class="doc-icon-container">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="#003A70" stroke-width="2" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                </div>
+                                <div class="doc-title-info">
+                                    <h4>Compliance & Code of Conduct</h4>
+                                    <p>Signed copy of Bayer Business Code agreement.</p>
+                                </div>
+                                <span class="status-pill pending" id="doc-status-compliance">Pending</span>
+                            </div>
+                            <div class="drop-zone" onclick="simulateFileUpload('compliance')" id="dropzone-compliance">
+                                <svg class="drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                <p class="drop-text">Click to choose or drag & drop file here</p>
+                                <p class="drop-hint">PDF only, maximum 10MB</p>
+                            </div>
+                            <div class="ai-verification-strip" id="ai-strip-compliance" style="display:none;">
+                                <div class="spinner"></div>
+                                <span>AI is verifying document structure...</span>
+                            </div>
+                        </div>
+
+                        <!-- Document 5: Agriculture Licenses -->
+                        <div class="upload-card" id="doc-card-license">
+                            <div class="upload-card-header">
+                                <div class="doc-icon-container">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="#003A70" stroke-width="2" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                                </div>
+                                <div class="doc-title-info">
+                                    <h4>Agrochemical Distribution License</h4>
+                                    <p>Regional government regulatory license for crops/seeds.</p>
+                                </div>
+                                <span class="status-pill pending" id="doc-status-license">Pending</span>
+                            </div>
+                            <div class="drop-zone" onclick="simulateFileUpload('license')" id="dropzone-license">
+                                <svg class="drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                <p class="drop-text">Click to choose or drag & drop file here</p>
+                                <p class="drop-hint">PDF, JPG up to 10MB</p>
+                            </div>
+                            <div class="ai-verification-strip" id="ai-strip-license" style="display:none;">
+                                <div class="spinner"></div>
+                                <span>AI is verifying document structure...</span>
+                            </div>
+                        </div>
+
+                        <!-- Document 6: Liability Insurance -->
+                        <div class="upload-card" id="doc-card-insurance">
+                            <div class="upload-card-header">
+                                <div class="doc-icon-container">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="#003A70" stroke-width="2" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                </div>
+                                <div class="doc-title-info">
+                                    <h4>Commercial Insurance Policy</h4>
+                                    <p>Certificate of liability insurance proof ($1M minimum).</p>
+                                </div>
+                                <span class="status-pill pending" id="doc-status-insurance">Pending</span>
+                            </div>
+                            <div class="drop-zone" onclick="simulateFileUpload('insurance')" id="dropzone-insurance">
+                                <svg class="drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                <p class="drop-text">Click to choose or drag & drop file here</p>
+                                <p class="drop-hint">PDF up to 15MB</p>
+                            </div>
+                            <div class="ai-verification-strip" id="ai-strip-insurance" style="display:none;">
+                                <div class="spinner"></div>
+                                <span>AI is verifying document structure...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Nav Panel -->
+                    <div class="form-actions" style="margin-top: 30px;">
+                        <span class="auto-save-status">
+                            <span class="status-dot green"></span>
+                            All documents stored in secure digital vault
+                        </span>
+                        <div class="btn-group">
+                            <button class="secondary-btn" onclick="navigateTo('view-form')">Back</button>
+                            <button class="primary-btn" onclick="advanceStepFromDocuments()">
+                                Continue
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. AI VALIDATION CENTER VIEW -->
+                <section id="view-ai-validation" class="content-view">
+                    <div class="section-title-bar">
+                        <div>
+                            <span class="section-subtitle">AI Co-Pilot Analytics</span>
+                            <h2>AI Validation Center</h2>
+                        </div>
+                        <button class="secondary-btn flex-align" onclick="triggerAIScan()">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" style="margin-right:8px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                            Re-Scan Onboarding Profile
+                        </button>
+                    </div>
+
+                    <!-- AI Statistics Grid -->
+                    <div class="ai-stats-grid">
+                        <div class="ai-stat-card border-blue">
+                            <span class="stat-label">Compliance Score</span>
+                            <div class="stat-large-val text-blue" id="ai-compliance-val">94%</div>
+                            <div class="stat-trend positive">✓ Fully Complaint Range</div>
+                        </div>
+                        <div class="ai-stat-card border-green">
+                            <span class="stat-label">Data Completeness</span>
+                            <div class="stat-large-val text-green" id="ai-completeness-val">35%</div>
+                            <div class="progress-bar-small">
+                                <div class="progress-bar-small-fill bg-green" id="ai-completeness-bar" style="width: 35%;"></div>
+                            </div>
+                        </div>
+                        <div class="ai-stat-card border-orange">
+                            <span class="stat-label">Predicted Approval Date</span>
+                            <div class="stat-large-val text-orange" id="ai-approval-date-val">July 14, 2026</div>
+                            <div class="stat-trend orange">⏱ Within 4 days (SLA Target)</div>
+                        </div>
+                        <div class="ai-stat-card border-gray">
+                            <span class="stat-label">Entity Risk Assessment</span>
+                            <div class="stat-large-val text-dark" id="ai-risk-level-val">Low Risk</div>
+                            <div class="stat-trend green">✓ 0 flags triggered</div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- AI Completeness & Audit Trail -->
+                        <div class="dashboard-card" style="grid-column: span 2;">
+                            <div class="card-header">
+                                <h3 class="card-title">AI Compliance Assessment Logs</h3>
+                            </div>
+                            
+                            <table class="enterprise-table">
+                                <thead>
+                                    <tr>
+                                        <th>Check Target</th>
+                                        <th>Audit Category</th>
+                                        <th>Status</th>
+                                        <th>Risk Score</th>
+                                        <th>AI Assessment Summary</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ai-logs-tbody">
+                                    <tr>
+                                        <td><strong>AgriCorp Inc.</strong></td>
+                                        <td>Company Info Check</td>
+                                        <td><span class="status-badge green">Verified</span></td>
+                                        <td><strong>0.02 (Low)</strong></td>
+                                        <td>Company registered in Delaware database. Details match tax entity.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Office of Foreign Assets Control (OFAC)</strong></td>
+                                        <td>Sanctions Screening</td>
+                                        <td><span class="status-badge green">Passed</span></td>
+                                        <td><strong>0.00 (None)</strong></td>
+                                        <td>Cleared against EU, US, Interpol sanctions list automatically.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Business Registration Document</strong></td>
+                                        <td>OCR classification</td>
+                                        <td><span class="status-badge orange" id="table-status-reg">Pending</span></td>
+                                        <td><strong id="table-risk-reg">--</strong></td>
+                                        <td id="table-desc-reg">Awaiting document upload. AI classifier will execute upon file ingestion.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tax Certificate Document</strong></td>
+                                        <td>TIN Format Validation</td>
+                                        <td><span class="status-badge orange" id="table-status-tax">Pending</span></td>
+                                        <td><strong id="table-risk-tax">--</strong></td>
+                                        <td id="table-desc-tax">Awaiting document upload. TIN compliance check is pending.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- AI Recommendations Card -->
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Suggested Next Actions</h3>
+                            </div>
+                            <div class="recommendations-box" id="ai-validation-actions">
+                                <div class="recommend-row">
+                                    <div class="action-num">1</div>
+                                    <div class="action-details">
+                                        <strong>Upload Required Documents</strong>
+                                        <p>Your business verification requires a trade register copy to match company details.</p>
+                                    </div>
+                                    <button class="action-btn" onclick="navigateTo('view-documents')">Go</button>
+                                </div>
+                                <div class="recommend-row locked">
+                                    <div class="action-num">2</div>
+                                    <div class="action-details">
+                                        <strong>Bank Setup Validation</strong>
+                                        <p>Unlocks after Banking Documents are uploaded. Prevents billing latency.</p>
+                                    </div>
+                                    <button class="action-btn" disabled>Locked</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. PROGRESS TIMELINE VIEW -->
+                <section id="view-timeline" class="content-view">
+                    <div class="section-title-bar">
+                        <div>
+                            <span class="section-subtitle">Workflow Milestones</span>
+                            <h2>Onboarding Timeline & SLA Logs</h2>
+                        </div>
+                    </div>
+
+                    <div class="timeline-container">
+                        <!-- Horizontal Summary Metrics -->
+                        <div class="timeline-summary-metrics">
+                            <div class="summary-metric">
+                                <span class="metric-num text-blue" id="timeline-progress-complete">1 / 12</span>
+                                <span class="metric-lbl">Stages Completed</span>
+                            </div>
+                            <div class="summary-metric">
+                                <span class="metric-num text-green">100%</span>
+                                <span class="metric-lbl">SLA Compliance Goal</span>
+                            </div>
+                            <div class="summary-metric">
+                                <span class="metric-num text-orange" id="timeline-elapsed">0h 5m</span>
+                                <span class="metric-lbl">Time Elapsed</span>
+                            </div>
+                        </div>
+
+                        <!-- Visual Timeline Nodes -->
+                        <div class="vertical-timeline" id="vertical-timeline-steps">
+                            <!-- Timeline nodes will be rendered programmatically in app.js -->
+                            <div class="timeline-node done">
+                                <div class="node-marker">✓</div>
+                                <div class="node-content">
+                                    <div class="node-header">
+                                        <h4>1. Welcome & Terms Acceptance</h4>
+                                        <span class="node-badge success">Completed</span>
+                                    </div>
+                                    <p class="node-desc">E-sign and general digital workflow parameters accepted.</p>
+                                    <div class="node-meta">
+                                        <span><strong>Owner:</strong> Atul Patidar (Partner)</span>
+                                        <span><strong>Finished:</strong> Today, 09:15 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-node active">
+                                <div class="node-marker">2</div>
+                                <div class="node-content">
+                                    <div class="node-header">
+                                        <h4>2. Company Information Upload</h4>
+                                        <span class="node-badge active">In Progress</span>
+                                    </div>
+                                    <p class="node-desc">Legal name, Tax ID, address, and profile settings setup.</p>
+                                    <div class="node-meta">
+                                        <span><strong>Owner:</strong> Atul Patidar (Partner)</span>
+                                        <span><strong>Target Est:</strong> 15 mins</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-node locked">
+                                <div class="node-marker">3</div>
+                                <div class="node-content">
+                                    <div class="node-header">
+                                        <h4>3. Business Verification</h4>
+                                        <span class="node-badge locked">Awaiting Previous Step</span>
+                                    </div>
+                                    <p class="node-desc">Automated company registry search and match confirmation.</p>
+                                    <div class="node-meta">
+                                        <span><strong>Owner:</strong> Bayer AI Automation Engine</span>
+                                        <span><strong>Target Est:</strong> Instantly (Real-time)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-node locked">
+                                <div class="node-marker">4</div>
+                                <div class="node-content">
+                                    <div class="node-header">
+                                        <h4>4. Required Documents Upload</h4>
+                                        <span class="node-badge locked">Locked</span>
+                                    </div>
+                                    <p class="node-desc">Trade register extract, Tax registration card, licenses, insurance verification.</p>
+                                    <div class="node-meta">
+                                        <span><strong>Owner:</strong> Atul Patidar (Partner)</span>
+                                        <span><strong>Target Est:</strong> 30 mins</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-node locked">
+                                <div class="node-marker">5</div>
+                                <div class="node-content">
+                                    <div class="node-header">
+                                        <h4>5. Banking & Financial Information</h4>
+                                        <span class="node-badge locked">Locked</span>
+                                    </div>
+                                    <p class="node-desc">Bank routing information, bank confirmation letter verification for credit limits.</p>
+                                    <div class="node-meta">
+                                        <span><strong>Owner:</strong> Atul Patidar (Partner)</span>
+                                        <span><strong>Target Est:</strong> 15 mins</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-node locked">
+                                <div class="node-marker">6</div>
+                                <div class="node-content">
+                                    <div class="node-header">
+                                        <h4>6. Compliance Validation & Screening</h4>
+                                        <span class="node-badge locked">Locked</span>
+                                    </div>
+                                    <p class="node-desc">Sanction registry, PEP screening, Bayer Anti-Corruption validation check.</p>
+                                    <div class="node-meta">
+                                        <span><strong>Owner:</strong> Bayer Compliance Desk</span>
+                                        <span><strong>Target Est:</strong> 1 Business Day</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. INTERNAL BAYER DASHBOARD VIEW (ADMIN CONSOLE) -->
+                <section id="view-internal" class="content-view">
+                    <div class="section-title-bar">
+                        <div>
+                            <span class="section-subtitle">Bayer Internal Operations</span>
+                            <h2>Onboarding Queue & Case Management</h2>
+                        </div>
+                        
+                        <div class="filters-bar">
+                            <select id="filter-region" onchange="filterAdminQueue()">
+                                <option value="all">All Regions</option>
+                                <option value="US">North America (US)</option>
+                                <option value="BR">Latin America (BR)</option>
+                                <option value="IN">Asia Pacific (IN)</option>
+                                <option value="DE">Europe (DE)</option>
+                            </select>
+
+                            <select id="filter-status" onchange="filterAdminQueue()">
+                                <option value="all">All Statuses</option>
+                                <option value="Pending Review">Pending Review</option>
+                                <option value="Blocked">Blocked / Actions Required</option>
+                                <option value="Ready for Setup">Ready for ERP Setup</option>
+                                <option value="Approved">Approved</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="admin-grid-layout">
+                        <!-- Left: Partner Queue Table -->
+                        <div class="admin-queue-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Partner Registration Stream</h3>
+                                <span class="badge blue" id="queue-count-badge">3 Applications</span>
+                            </div>
+                            
+                            <table class="enterprise-table text-left" id="admin-queue-table">
+                                <thead>
+                                    <tr>
+                                        <th>Partner Details</th>
+                                        <th>Region</th>
+                                        <th>Completeness</th>
+                                        <th>AI Risk Score</th>
+                                        <th>SLA Timer</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="queue-row clickable active" onclick="selectAdminCase('AgriCorp Inc.')" data-partner="AgriCorp Inc.">
+                                        <td>
+                                            <div class="partner-meta-cell">
+                                                <strong>AgriCorp Inc.</strong>
+                                                <span>Distributor • Corn/Soybeans</span>
+                                            </div>
+                                        </td>
+                                        <td>North America (US)</td>
+                                        <td>
+                                            <div class="table-progress-cell">
+                                                <span id="queue-corp-pct">35%</span>
+                                                <div class="progress-bar-small"><div class="progress-bar-small-fill bg-blue" id="queue-corp-bar" style="width: 35%;"></div></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="risk-badge green" id="queue-corp-risk">12% (Low)</span>
+                                        </td>
+                                        <td><span class="sla-timer text-blue">2d 4h left</span></td>
+                                        <td><span class="status-badge orange" id="queue-corp-status">Pending Review</span></td>
+                                    </tr>
+
+                                    <tr class="queue-row clickable" onclick="selectAdminCase('TerraGrow Ltda')" data-partner="TerraGrow Ltda">
+                                        <td>
+                                            <div class="partner-meta-cell">
+                                                <strong>TerraGrow Ltda</strong>
+                                                <span>Retailer • Multi-Crop</span>
+                                            </div>
+                                        </td>
+                                        <td>Latin America (BR)</td>
+                                        <td>
+                                            <div class="table-progress-cell">
+                                                <span>100%</span>
+                                                <div class="progress-bar-small"><div class="progress-bar-small-fill bg-green" style="width: 100%;"></div></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="risk-badge red">82% (High)</span>
+                                        </td>
+                                        <td><span class="sla-timer text-red">4h expired</span></td>
+                                        <td><span class="status-badge red">Blocked</span></td>
+                                    </tr>
+
+                                    <tr class="queue-row clickable" onclick="selectAdminCase('EuroAgro Gmbh')" data-partner="EuroAgro Gmbh" data-region="DE">
+                                        <td>
+                                            <div class="partner-meta-cell">
+                                                <strong>EuroAgro Gmbh</strong>
+                                                <span>Dealer • Wheat/Sugarbeet</span>
+                                            </div>
+                                        </td>
+                                        <td>Europe (DE)</td>
+                                        <td>
+                                            <div class="table-progress-cell">
+                                                <span>88%</span>
+                                                <div class="progress-bar-small"><div class="progress-bar-small-fill bg-blue" style="width: 88%;"></div></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="risk-badge green">28% (Low)</span>
+                                        </td>
+                                        <td><span class="sla-timer text-blue">1d 8h left</span></td>
+                                        <td><span class="status-badge orange">Pending Review</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Right: Detailed Case Review Panel -->
+                        <div class="case-detail-card" id="admin-detail-panel">
+                            <div class="card-header">
+                                <h3 class="card-title">Case details: <span id="admin-detail-company">AgriCorp Inc.</span></h3>
+                                <span class="badge blue" id="admin-detail-manager">Assigned Manager: Sarah Connor</span>
+                            </div>
+                            
+                            <div class="case-detail-body">
+                                <!-- Quick Metrics -->
+                                <div class="case-metrics-bar">
+                                    <div class="case-metric">
+                                        <span class="c-label">AI Risk Score</span>
+                                        <strong class="c-value text-green" id="admin-case-risk">12% (Low Risk)</strong>
+                                    </div>
+                                    <div class="case-metric">
+                                        <span class="c-label">SLA Target</span>
+                                        <strong class="c-value text-blue" id="admin-case-sla">72 Hours Max</strong>
+                                    </div>
+                                </div>
+
+                                <!-- Partner Form Fields -->
+                                <div class="detail-section">
+                                    <h4>Submitted Form Information</h4>
+                                    <div class="detail-fields-grid" id="admin-detail-fields">
+                                        <div class="d-field"><span>Tax ID / TIN:</span> <strong id="admin-detail-tin">47-1928371</strong></div>
+                                        <div class="d-field"><span>Business Reg:</span> <strong id="admin-detail-reg">BR-102938-X</strong></div>
+                                        <div class="d-field"><span>Primary Contact:</span> <strong id="admin-detail-contact">Atul Patidar</strong></div>
+                                        <div class="d-field"><span>Contact Email:</span> <strong id="admin-detail-email">atul@agricorp.com</strong></div>
+                                        <div class="d-field"><span>Crop Focus:</span> <strong id="admin-detail-crop">Corn & Soybeans</strong></div>
+                                        <div class="d-field"><span>Region:</span> <strong id="admin-detail-region">US-MIDWEST</strong></div>
+                                    </div>
+                                </div>
+
+                                <!-- Document Verification List -->
+                                <div class="detail-section">
+                                    <h4>Uploaded Documents Review</h4>
+                                    <div class="admin-doc-list" id="admin-detail-docs">
+                                        <!-- Will populate dynamically -->
+                                        <div class="admin-doc-item">
+                                            <div class="admin-doc-info">
+                                                <strong>Business Registration Certificate</strong>
+                                                <span class="doc-badge green">✓ AI Match: 99%</span>
+                                            </div>
+                                            <div class="admin-doc-actions">
+                                                <button class="action-btn-small green" onclick="approveDocument('registration')">Verify</button>
+                                                <button class="action-btn-small red" onclick="rejectDocument('registration')">Reject</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Actions -->
+                                <div class="case-actions-footer">
+                                    <button class="action-btn-danger" onclick="triggerBlockCase()">Block Case</button>
+                                    <button class="action-btn-success" onclick="triggerApprovePartner()">Approve Partner Profile</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 7. ACTIVATION SUCCESS VIEW -->
+                <section id="view-activation" class="content-view">
+                    <div class="activation-card-layout">
+                        <div class="success-icon-shield">
+                            <!-- Bayer Shield & Green Checkmark Animation SVG -->
+                            <svg class="success-shield-svg" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="#66CC33" stroke-width="3" stroke-dasharray="283" stroke-dashoffset="0"/>
+                                <path d="M30 52 L45 67 L70 37" fill="none" stroke="#66CC33" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        
+                        <h1>Congratulations!</h1>
+                        <h2>Your Bayer Partner Profile is Activated</h2>
+                        <p class="activation-msg">AgriCorp Inc. has successfully completed the digital onboarding journey. Your ERP profiles, CRM connections, security logins, and primary billing accounts are configured.</p>
+
+                        <!-- Activation Detail Stats -->
+                        <div class="activation-details-grid">
+                            <div class="act-detail-item">
+                                <span>Bayer Partner ID</span>
+                                <strong>BP-9201938</strong>
+                            </div>
+                            <div class="act-detail-item">
+                                <span>ERP Integration Status</span>
+                                <strong class="text-green">✓ Active & Connected</strong>
+                            </div>
+                            <div class="act-detail-item">
+                                <span>Initial Credit Limit</span>
+                                <strong>$500,000 USD</strong>
+                            </div>
+                            <div class="act-detail-item">
+                                <span>Assigned Bayer Rep</span>
+                                <strong>Sarah Connor (US-West)</strong>
+                            </div>
+                        </div>
+
+                        <!-- CTA buttons -->
+                        <div class="activation-cta-group">
+                            <button class="primary-btn ripple" onclick="openWelcomePortal()">
+                                Explore Partner Portal
+                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </button>
+                            <button class="secondary-btn" onclick="downloadWelcomeKit()">
+                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" style="margin-right:8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                Download Welcome Kit
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <!-- Right Persistent AI Copilot Panel -->
+        <aside class="copilot-panel" id="copilot-sidebar">
+            <div class="copilot-header">
+                <div class="copilot-header-title">
+                    <span class="copilot-glow-dot"></span>
+                    <span class="ai-spark-icon">✨</span>
+                    <h4>Bayer Onboarding Copilot</h4>
+                </div>
+                <button class="copilot-close-btn" onclick="toggleCopilot()">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <!-- Chat Message Window -->
+            <div class="copilot-chat-history" id="copilot-chat-container">
+                <!-- Welcome Message -->
+                <div class="chat-message assistant">
+                    <div class="message-meta">Bayer Copilot AI • Today</div>
+                    <div class="message-bubble">
+                        Hello! I am your Bayer Onboarding Copilot. I can assist you with form validation, document requirements, compliance status, or ERP setups. How can I help you today?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Action Suggestion Chips -->
+            <div class="copilot-suggestions" id="copilot-suggestion-chips">
+                <button class="chip" onclick="handleChipClick('What are the required documents?')">List required documents</button>
+                <button class="chip" onclick="handleChipClick('Why is my Tax certificate pending?')">Why is my Tax certificate pending?</button>
+                <button class="chip" onclick="handleChipClick('Auto-fill Company Details')">Auto-fill using AI</button>
+                <button class="chip" onclick="handleChipClick('How long will onboarding take?')">Predict approval timeline</button>
+            </div>
+
+            <!-- Chat Input Box -->
+            <div class="copilot-input-area">
+                <input type="text" placeholder="Ask Copilot a question..." id="copilot-chat-input" onkeydown="handleChatSubmit(event)">
+                <button class="copilot-send-btn" onclick="submitChatQuery()">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Floating Chat Icon (to reopen if closed) -->
+        <button class="copilot-floating-btn" id="copilot-toggle-float" onclick="toggleCopilot()" style="display:none;">
+            <span class="ai-spark-icon">✨</span>
+            AI Copilot
+        </button>
+    </div>
+
+    <!-- Main JavaScript App -->
+    <script src="app.js"></script>
+</body>
+</html>
