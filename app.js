@@ -787,20 +787,21 @@ function syncAdminCaseDetails() {
 }
 
 function filterAdminQueue() {
-    const region = document.getElementById('filter-region').value;
+    const mode = document.getElementById('filter-onboarding-mode').value;
     const status = document.getElementById('filter-status').value;
 
     let filteredCount = 0;
     
     document.querySelectorAll('#admin-queue-table tbody tr').forEach(row => {
         const partnerName = row.getAttribute('data-partner');
+        const rowMode = row.getAttribute('data-mode');
         const c = state.cases.find(item => item.companyName === partnerName);
         if (!c) return;
 
-        let regionMatch = (region === 'all' || c.country === region);
+        let modeMatch = (mode === 'all' || rowMode === mode);
         let statusMatch = (status === 'all' || c.status === status);
 
-        if (regionMatch && statusMatch) {
+        if (modeMatch && statusMatch) {
             row.style.display = '';
             filteredCount++;
         } else {
@@ -808,7 +809,43 @@ function filterAdminQueue() {
         }
     });
 
-    document.getElementById('queue-count-badge').textContent = `${filteredCount} Applications`;
+    document.getElementById('queue-count-badge').textContent = `${filteredCount} Cases`;
+}
+
+/* ==========================================================================
+   Internal Enhancements Logic (v1.1)
+   ========================================================================== */
+function openCreateOnboardingModal() {
+    const modal = document.getElementById('create-partner-modal');
+    if (modal) modal.style.display = 'flex';
+}
+
+function closeCreateOnboardingModal() {
+    const modal = document.getElementById('create-partner-modal');
+    if (modal) modal.style.display = 'none';
+}
+
+function submitManualOnboarding() {
+    const company = document.getElementById('manual-company').value;
+    if (!company) {
+        showToast('Please enter a company name', 'danger');
+        return;
+    }
+    
+    closeCreateOnboardingModal();
+    showToast(`Creating manual case for ${company}...`, 'info');
+    
+    setTimeout(() => {
+        showToast(`Manual case created and assigned to you.`, 'success');
+        addActivity('blue', 'Manual Case Created', `Assisted onboarding initiated for ${company}.`);
+    }, 1000);
+}
+
+function switchChannelTab(tabId) {
+    document.querySelectorAll('.channel-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    showToast(`Loading relationship map for ${event.target.innerText}...`, 'info');
 }
 
 function triggerApprovePartner() {
@@ -1019,7 +1056,20 @@ function generateAISmartAnswer(query) {
     const q = query.toLowerCase();
     let reply = "";
 
-    if (q.includes('document')) {
+    if (state.currentRole === 'internal') {
+        // Internal-facing AI responses
+        if (q.includes('missing') || q.includes('stalled')) {
+            reply = "I identified 3 stalled cases awaiting partner action over 72 hours. 'TerraGrow Ltda' is blocked due to an expired tax certificate. I suggest using the **Request Info** action to prompt the partner.";
+        } else if (q.includes('approve') || q.includes('recommend')) {
+            reply = "Based on the 99% AI match for 'AgriCorp Inc.' documents and their low risk score (12%), I recommend clicking **Approve Partner Profile** to finalize the ERP synchronization.";
+        } else if (q.includes('duplicate')) {
+            reply = "I ran a cross-reference scan on the ERP. No duplicate entity records found for 'AgriCorp Inc.' in North America.";
+        } else {
+            reply = `Internal Ops Context: You asked about '${query}'. You can edit partner information directly, upload replacement documents, or escalate cases using the Workspace Actions above.`;
+        }
+    }
+    // Partner-facing AI responses
+    else if (q.includes('document')) {
         reply = "For compliance, you need to provide these 6 filings:\n- **Business Registration**: proof of trading.\n- **Tax Certificate**: W-9 or regional equivalent.\n- **Bank Details**: confirmation letter.\n- **Compliance Agreement**: signed Bayer policy.\n- **License**: chemicals/seeds distribution permission.\n- **Insurance Policy**: liability proof.";
     } 
     else if (q.includes('tax') || q.includes('certificate')) {

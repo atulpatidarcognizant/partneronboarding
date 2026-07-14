@@ -901,18 +901,56 @@
                     <div class="section-title-bar">
                         <div>
                             <span class="section-subtitle">Bayer Internal Operations</span>
-                            <h2>Onboarding Queue & Case Management</h2>
+                            <h2>Internal Case Workspace</h2>
                         </div>
-                        
-                        <div class="filters-bar">
-                            <select id="filter-region" onchange="filterAdminQueue()">
-                                <option value="all">All Regions</option>
-                                <option value="US">North America (US)</option>
-                                <option value="BR">Latin America (BR)</option>
-                                <option value="IN">Asia Pacific (IN)</option>
-                                <option value="DE">Europe (DE)</option>
-                            </select>
+                        <button class="primary-btn ripple" onclick="openCreateOnboardingModal()">
+                            + Create Partner Onboarding
+                        </button>
+                    </div>
 
+                    <!-- Summary Widgets -->
+                    <div class="internal-summary-widgets">
+                        <div class="summary-widget">
+                            <span class="widget-label">Manual Cases</span>
+                            <strong class="widget-val text-blue">24</strong>
+                        </div>
+                        <div class="summary-widget">
+                            <span class="widget-label">Assisted Cases</span>
+                            <strong class="widget-val text-green">18</strong>
+                        </div>
+                        <div class="summary-widget">
+                            <span class="widget-label">Self-Service Cases</span>
+                            <strong class="widget-val">56</strong>
+                        </div>
+                        <div class="summary-widget">
+                            <span class="widget-label">Awaiting Bayer Action</span>
+                            <strong class="widget-val text-orange">12</strong>
+                        </div>
+                        <div class="summary-widget">
+                            <span class="widget-label">Overdue Cases</span>
+                            <strong class="widget-val text-red">3</strong>
+                        </div>
+                        <div class="summary-widget">
+                            <span class="widget-label">Avg. Time to Activation</span>
+                            <strong class="widget-val">1.4 Days</strong>
+                        </div>
+                    </div>
+
+                    <!-- Channel Journey Relationships & Filters -->
+                    <div class="internal-controls-bar">
+                        <div class="channel-tabs">
+                            <button class="channel-tab active" onclick="switchChannelTab('distributor')">Bayer → Distributor</button>
+                            <button class="channel-tab" onclick="switchChannelTab('retailer')">Distributor → Retailer</button>
+                            <button class="channel-tab" onclick="switchChannelTab('dealer')">Distributor → Dealer</button>
+                            <button class="channel-tab" onclick="switchChannelTab('consultant')">Distributor → Consultant</button>
+                        </div>
+                        <div class="filters-bar">
+                            <select id="filter-onboarding-mode" onchange="filterAdminQueue()">
+                                <option value="all">All Modes</option>
+                                <option value="Self-Service">Partner Self-Service</option>
+                                <option value="Assisted">Bayer Assisted</option>
+                                <option value="Manual">Bayer Full Manual</option>
+                            </select>
                             <select id="filter-status" onchange="filterAdminQueue()">
                                 <option value="all">All Statuses</option>
                                 <option value="Pending Review">Pending Review</option>
@@ -927,30 +965,27 @@
                         <!-- Left: Partner Queue Table -->
                         <div class="admin-queue-card">
                             <div class="card-header">
-                                <h3 class="card-title">Partner Registration Stream</h3>
-                                <span class="badge blue" id="queue-count-badge">3 Applications</span>
+                                <h3 class="card-title">Onboarding Cases Queue</h3>
+                                <span class="badge blue" id="queue-count-badge">3 Cases</span>
                             </div>
-                            
                             <table class="enterprise-table text-left" id="admin-queue-table">
                                 <thead>
                                     <tr>
                                         <th>Partner Details</th>
-                                        <th>Region</th>
+                                        <th>Mode</th>
                                         <th>Completeness</th>
-                                        <th>AI Risk Score</th>
-                                        <th>SLA Timer</th>
-                                        <th>Status</th>
+                                        <th>Status & SLA</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="queue-row clickable active" onclick="selectAdminCase('AgriCorp Inc.')" data-partner="AgriCorp Inc.">
+                                    <tr class="queue-row clickable active" onclick="selectAdminCase('AgriCorp Inc.')" data-partner="AgriCorp Inc." data-mode="Self-Service">
                                         <td>
                                             <div class="partner-meta-cell">
                                                 <strong>AgriCorp Inc.</strong>
-                                                <span>Distributor • Corn/Soybeans</span>
+                                                <span>Distributor • North America</span>
                                             </div>
                                         </td>
-                                        <td>North America (US)</td>
+                                        <td><span class="badge gray">Self-Service</span></td>
                                         <td>
                                             <div class="table-progress-cell">
                                                 <span id="queue-corp-pct">35%</span>
@@ -958,20 +993,20 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="risk-badge green" id="queue-corp-risk">12% (Low)</span>
+                                            <div class="status-sla-cell">
+                                                <span class="status-badge orange" id="queue-corp-status">Pending Review</span>
+                                                <span class="sla-timer text-blue">2d 4h left</span>
+                                            </div>
                                         </td>
-                                        <td><span class="sla-timer text-blue">2d 4h left</span></td>
-                                        <td><span class="status-badge orange" id="queue-corp-status">Pending Review</span></td>
                                     </tr>
-
-                                    <tr class="queue-row clickable" onclick="selectAdminCase('TerraGrow Ltda')" data-partner="TerraGrow Ltda">
+                                    <tr class="queue-row clickable" onclick="selectAdminCase('TerraGrow Ltda')" data-partner="TerraGrow Ltda" data-mode="Manual">
                                         <td>
                                             <div class="partner-meta-cell">
                                                 <strong>TerraGrow Ltda</strong>
-                                                <span>Retailer • Multi-Crop</span>
+                                                <span>Retailer • Latin America</span>
                                             </div>
                                         </td>
-                                        <td>Latin America (BR)</td>
+                                        <td><span class="badge blue">Manual</span></td>
                                         <td>
                                             <div class="table-progress-cell">
                                                 <span>100%</span>
@@ -979,20 +1014,20 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="risk-badge red">82% (High)</span>
+                                            <div class="status-sla-cell">
+                                                <span class="status-badge red">Blocked</span>
+                                                <span class="sla-timer text-red">4h expired</span>
+                                            </div>
                                         </td>
-                                        <td><span class="sla-timer text-red">4h expired</span></td>
-                                        <td><span class="status-badge red">Blocked</span></td>
                                     </tr>
-
-                                    <tr class="queue-row clickable" onclick="selectAdminCase('EuroAgro Gmbh')" data-partner="EuroAgro Gmbh" data-region="DE">
+                                    <tr class="queue-row clickable" onclick="selectAdminCase('EuroAgro Gmbh')" data-partner="EuroAgro Gmbh" data-mode="Assisted">
                                         <td>
                                             <div class="partner-meta-cell">
                                                 <strong>EuroAgro Gmbh</strong>
-                                                <span>Dealer • Wheat/Sugarbeet</span>
+                                                <span>Dealer • Europe</span>
                                             </div>
                                         </td>
-                                        <td>Europe (DE)</td>
+                                        <td><span class="badge green">Assisted</span></td>
                                         <td>
                                             <div class="table-progress-cell">
                                                 <span>88%</span>
@@ -1000,71 +1035,112 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="risk-badge green">28% (Low)</span>
+                                            <div class="status-sla-cell">
+                                                <span class="status-badge orange">Pending Review</span>
+                                                <span class="sla-timer text-blue">1d 8h left</span>
+                                            </div>
                                         </td>
-                                        <td><span class="sla-timer text-blue">1d 8h left</span></td>
-                                        <td><span class="status-badge orange">Pending Review</span></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
-                        <!-- Right: Detailed Case Review Panel -->
+                        <!-- Right: Detailed Case Workspace Panel -->
                         <div class="case-detail-card" id="admin-detail-panel">
-                            <div class="card-header">
-                                <h3 class="card-title">Case details: <span id="admin-detail-company">AgriCorp Inc.</span></h3>
-                                <span class="badge blue" id="admin-detail-manager">Assigned Manager: Sarah Connor</span>
+                            <div class="workspace-header">
+                                <div class="workspace-title-area">
+                                    <h3 class="card-title"><span id="admin-detail-company">AgriCorp Inc.</span> Workspace</h3>
+                                    <span class="badge blue" id="admin-detail-manager">Assigned: Sarah Connor</span>
+                                    <span class="badge gray" id="admin-detail-mode">Self-Service</span>
+                                </div>
+                                <div class="workspace-actions">
+                                    <button class="action-btn-small" onclick="showToast('Edit Information modal opened', 'info')">Edit Info</button>
+                                    <button class="action-btn-small" onclick="showToast('Upload Documents modal opened', 'info')">Upload Docs</button>
+                                    <button class="action-btn-small" onclick="showToast('Requesting additional information...', 'info')">Request Info</button>
+                                    <button class="action-btn-small" onclick="showToast('Case reassigned to a different associate', 'success')">Reassign</button>
+                                    <button class="action-btn-small text-red" onclick="showToast('Escalated to L2 support', 'warning')">Escalate</button>
+                                </div>
                             </div>
                             
                             <div class="case-detail-body">
-                                <!-- Quick Metrics -->
-                                <div class="case-metrics-bar">
-                                    <div class="case-metric">
-                                        <span class="c-label">AI Risk Score</span>
-                                        <strong class="c-value text-green" id="admin-case-risk">12% (Low Risk)</strong>
-                                    </div>
-                                    <div class="case-metric">
-                                        <span class="c-label">SLA Target</span>
-                                        <strong class="c-value text-blue" id="admin-case-sla">72 Hours Max</strong>
-                                    </div>
+                                <div class="workspace-tabs">
+                                    <button class="workspace-tab active">Overview</button>
+                                    <button class="workspace-tab">Documents</button>
+                                    <button class="workspace-tab">Audit Trail</button>
+                                    <button class="workspace-tab">Communications</button>
                                 </div>
 
-                                <!-- Partner Form Fields -->
-                                <div class="detail-section">
-                                    <h4>Submitted Form Information</h4>
-                                    <div class="detail-fields-grid" id="admin-detail-fields">
-                                        <div class="d-field"><span>Tax ID / TIN:</span> <strong id="admin-detail-tin">47-1928371</strong></div>
-                                        <div class="d-field"><span>Business Reg:</span> <strong id="admin-detail-reg">BR-102938-X</strong></div>
-                                        <div class="d-field"><span>Primary Contact:</span> <strong id="admin-detail-contact">Atul Patidar</strong></div>
-                                        <div class="d-field"><span>Contact Email:</span> <strong id="admin-detail-email">atul@agricorp.com</strong></div>
-                                        <div class="d-field"><span>Crop Focus:</span> <strong id="admin-detail-crop">Corn & Soybeans</strong></div>
-                                        <div class="d-field"><span>Region:</span> <strong id="admin-detail-region">US-MIDWEST</strong></div>
+                                <div class="workspace-content">
+                                    <div class="detail-section">
+                                        <h4>Current Stage & Interventions</h4>
+                                        <div class="intervention-timeline">
+                                            <div class="intervention-step completed">Data Collection ✓</div>
+                                            <div class="intervention-step active">Missing Info Follow-up ⚠️</div>
+                                            <div class="intervention-step pending">Document Replacement</div>
+                                            <div class="intervention-step pending">ERP Sync</div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Document Verification List -->
-                                <div class="detail-section">
-                                    <h4>Uploaded Documents Review</h4>
-                                    <div class="admin-doc-list" id="admin-detail-docs">
-                                        <!-- Will populate dynamically -->
-                                        <div class="admin-doc-item">
-                                            <div class="admin-doc-info">
-                                                <strong>Business Registration Certificate</strong>
-                                                <span class="doc-badge green">✓ AI Match: 99%</span>
-                                            </div>
-                                            <div class="admin-doc-actions">
-                                                <button class="action-btn-small green" onclick="approveDocument('registration')">Verify</button>
-                                                <button class="action-btn-small red" onclick="rejectDocument('registration')">Reject</button>
-                                            </div>
+                                    <div class="detail-section">
+                                        <h4>Partner Profile</h4>
+                                        <div class="detail-fields-grid" id="admin-detail-fields">
+                                            <div class="d-field"><span>Tax ID / TIN:</span> <strong id="admin-detail-tin">47-1928371</strong></div>
+                                            <div class="d-field"><span>Business Reg:</span> <strong id="admin-detail-reg">BR-102938-X</strong></div>
+                                            <div class="d-field"><span>Primary Contact:</span> <strong id="admin-detail-contact">Atul Patidar</strong></div>
+                                            <div class="d-field"><span>Contact Email:</span> <strong id="admin-detail-email">atul@agricorp.com</strong></div>
+                                            <div class="d-field"><span>Crop Focus:</span> <strong id="admin-detail-crop">Corn & Soybeans</strong></div>
+                                            <div class="d-field"><span>Region:</span> <strong id="admin-detail-region">US-MIDWEST</strong></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="detail-section">
+                                        <h4>Internal Notes & Audit</h4>
+                                        <textarea class="internal-notes-input" placeholder="Add a private note about this case..."></textarea>
+                                        <div class="audit-log">
+                                            <div class="audit-item"><span class="time">10:45 AM</span> Sarah Connor flagged missing Tax cert.</div>
+                                            <div class="audit-item"><span class="time">09:12 AM</span> Partner initiated self-service.</div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Actions -->
                                 <div class="case-actions-footer">
-                                    <button class="action-btn-danger" onclick="triggerBlockCase()">Block Case</button>
+                                    <button class="action-btn-danger" onclick="triggerBlockCase()">Reject / Hold</button>
+                                    <button class="secondary-btn" onclick="showToast('Draft Saved', 'success')">Save Draft</button>
                                     <button class="action-btn-success" onclick="triggerApprovePartner()">Approve Partner Profile</button>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Create Partner Modal Overlay (Hidden by default) -->
+                    <div id="create-partner-modal" class="modal-overlay" style="display:none;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3>Create Partner Onboarding (Manual Mode)</h3>
+                                <button class="close-btn" onclick="closeCreateOnboardingModal()">✕</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>Company Legal Name</label>
+                                    <input type="text" id="manual-company" placeholder="Enter company name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Channel Relationship</label>
+                                    <select id="manual-channel">
+                                        <option>Bayer → Distributor</option>
+                                        <option>Distributor → Retailer</option>
+                                        <option>Distributor → Dealer</option>
+                                        <option>Distributor → Consultant</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Initial Documents (Optional)</label>
+                                    <input type="file" multiple class="file-input">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="secondary-btn" onclick="closeCreateOnboardingModal()">Cancel</button>
+                                <button class="primary-btn" onclick="submitManualOnboarding()">Create Case</button>
                             </div>
                         </div>
                     </div>
