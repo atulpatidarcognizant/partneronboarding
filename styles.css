@@ -2673,11 +2673,36 @@ body {
     border-color: rgba(0, 58, 112, 0.2);
 }
 
-/* Case Workspace */
+/* Case Workspace & Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+.badge.blue {
+    background-color: var(--accent-blue-soft);
+    color: var(--bayer-blue);
+}
+.badge.gray {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+.badge.green {
+    background-color: var(--accent-green-soft);
+    color: var(--bayer-green);
+}
+
 .workspace-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
     padding-bottom: 16px;
     border-bottom: 1px solid var(--border-color);
     margin-bottom: 16px;
@@ -2685,10 +2710,15 @@ body {
 .workspace-title-area {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 12px;
+}
+.workspace-title-area h3 {
+    margin: 0;
 }
 .workspace-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
 }
 .workspace-tabs {
